@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>น้องกริ่ง — LINE Bot Automation Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafafa;
+      --surface: #ffffff;
+      --text: #1a1a2e;
+      --text-secondary: #64748b;
+      --accent: #06c755;
+      --accent-dark: #05a647;
+      --accent-light: #e8faf0;
+      --border: #e2e8f0;
+      --code-bg: #1e293b;
+      --code-text: #e2e8f0;
+      --tag-bg: #f1f5f9;
+      --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 10px 25px rgba(0,0,0,0.08);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --max-w: 800px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #06c755 0%, #00b900 50%, #009e3d 100%);
+      color: #fff;
+      padding: 80px 24px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.08) 0%, transparent 50%);
+    }
+    .hero-inner { position: relative; max-width: var(--max-w); margin: 0 auto; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+    .hero-bot-name {
+      font-size: 2.8rem;
+      margin-bottom: 4px;
+    }
+    .hero h1 {
+      font-size: clamp(1.6rem, 4.5vw, 2.4rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    .hero .hero-sub {
+      font-size: 1.1rem;
+      font-weight: 600;
+      opacity: 0.95;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      font-size: 1rem;
+      opacity: 0.85;
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
+    article { padding: 48px 0 80px; }
+
+    .section-intro { margin: 48px 0 24px; }
+    .section-intro h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 8px; }
+    .section-intro p { color: var(--text-secondary); font-size: 0.95rem; }
+
+    /* ===== PROJECT CARD ===== */
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s;
+    }
+    .project-card:hover { box-shadow: var(--shadow-md); }
+    .project-card h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .project-card .subtitle { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px; }
+
+    /* ===== TAGS ===== */
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+    }
+    .tag.green { background: var(--accent-light); color: var(--accent-dark); border-color: #c6f0d5; }
+    .tag.blue { background: #eff6ff; color: #2563eb; border-color: #bfdbfe; }
+    .tag.purple { background: #faf5ff; color: #7c3aed; border-color: #ddd6fe; }
+
+    /* ===== DT STEPS ===== */
+    .dt-steps { display: grid; gap: 16px; margin: 20px 0; }
+    .dt-step {
+      background: #f8fafc;
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+    .dt-step .step-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent-dark);
+      margin-bottom: 4px;
+    }
+    .dt-step .step-content { font-size: 0.92rem; line-height: 1.65; }
+
+    /* ===== FEATURES ===== */
+    .features { list-style: none; margin: 16px 0; }
+    .features li { position: relative; padding: 6px 0 6px 28px; font-size: 0.95rem; }
+    .features li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+    /* ===== CODE BLOCK ===== */
+    .code-block {
+      background: var(--code-bg);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      margin: 20px 0;
+      overflow-x: auto;
+      position: relative;
+    }
+    .code-block .code-label {
+      position: absolute;
+      top: 10px; right: 14px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #94a3b8;
+      text-transform: uppercase;
+    }
+    .code-block pre {
+      font-family: 'Fira Code', monospace;
+      font-size: 0.82rem;
+      color: var(--code-text);
+      line-height: 1.7;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    .comment { color: #6b7f99; }
+    .keyword { color: #c792ea; }
+    .string { color: #c3e88d; }
+    .func { color: #82aaff; }
+    .const-name { color: #f78c6c; }
+    .censored {
+      background: #475569;
+      color: #94a3b8;
+      padding: 1px 8px;
+      border-radius: 4px;
+      font-style: italic;
+    }
+
+    /* ===== ARCH BOX ===== */
+    .arch-box {
+      background: linear-gradient(135deg, #f0fdf4 0%, #f0f9ff 100%);
+      border: 1px solid #d1fae5;
+      border-radius: var(--radius);
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .arch-box h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 12px; }
+    .arch-flow {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+    .arch-flow .node {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+    }
+    .arch-flow .arrow { color: var(--accent); font-weight: 700; font-size: 1.1rem; }
+
+    /* ===== INSIGHT BOX ===== */
+    .insight-box {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .insight-box h4 { font-size: 0.9rem; font-weight: 600; color: #92400e; margin-bottom: 8px; }
+    .insight-box p { font-size: 0.9rem; color: #78350f; line-height: 1.7; }
+
+    /* ===== FLEX PREVIEW — LINE CHAT STYLE ===== */
+    .line-chat-preview {
+      background: #7eaacc;
+      border-radius: var(--radius);
+      padding: 20px;
+      margin: 24px 0;
+    }
+    .line-chat-preview .chat-label {
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 12px;
+    }
+    .line-msg-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .line-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #ffd54f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .line-bot-label {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 3px;
+    }
+
+    /* ===== FLEX CARD (สีมงคล) ===== */
+    .flex-color-card {
+      width: 280px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .flex-color-card .card-hero {
+      background: linear-gradient(180deg, #0f0c29, #302b63, #24243e);
+      padding: 20px 16px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .flex-color-card .card-hero::before {
+      content: '✦ ✧ ★ ✦ ✧';
+      position: absolute;
+      top: 8px; left: 0; right: 0;
+      font-size: 0.6rem;
+      letter-spacing: 8px;
+      color: rgba(255,255,255,0.15);
+    }
+    .flex-color-card .card-hero .day {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .flex-color-card .card-hero .lunar {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #fff;
+      margin-top: 4px;
+    }
+    .flex-color-card .card-body {
+      background: #fff;
+      padding: 14px 16px;
+    }
+    .flex-color-card .color-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px solid #f3f3f3;
+      font-size: 0.82rem;
+    }
+    .flex-color-card .color-row:last-child { border-bottom: none; }
+    .flex-color-card .color-row .label { color: #aaa; }
+    .flex-color-card .color-row .value { color: #444; font-weight: 500; }
+    .flex-color-card .card-footer {
+      background: #fff;
+      padding: 6px 16px 14px;
+      text-align: center;
+      font-size: 0.72rem;
+      color: #aaa;
+    }
+
+    /* ===== FLEX CARD (LOTTO) ===== */
+    .flex-lotto-card {
+      width: 280px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      background: #0A2D73;
+    }
+    .flex-lotto-card .lotto-header {
+      padding: 20px 16px 8px;
+      text-align: center;
+    }
+    .flex-lotto-card .lotto-header .title { color: #FFC107; font-size: 1rem; font-weight: 700; }
+    .flex-lotto-card .lotto-header .date { color: #fff; font-size: 0.95rem; font-weight: 700; margin-top: 2px; }
+    .flex-lotto-card .lotto-header .prize-label { color: #FFC107; font-size: 0.85rem; font-weight: 600; margin-top: 8px; }
+    .flex-lotto-card .prize1-box {
+      background: #000;
+      margin: 10px 16px;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .flex-lotto-card .prize1-box .number {
+      color: #fff;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 8px;
+    }
+    .flex-lotto-card .lotto-bottom {
+      padding: 12px 16px 10px;
+      display: flex;
+      gap: 8px;
+    }
+    .flex-lotto-card .mini-prize { flex: 1; text-align: center; }
+    .flex-lotto-card .mini-prize .mini-label { color: #FFC107; font-size: 0.65rem; font-weight: 600; margin-bottom: 4px; }
+    .flex-lotto-card .mini-prize .mini-num {
+      background: #fff;
+      border-radius: 8px;
+      padding: 5px 4px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 4px;
+    }
+    .flex-lotto-card .mini-prize .mini-num.big { font-size: 1.3rem; color: #F4A300; padding: 12px 4px; }
+    .flex-lotto-card .lotto-cta {
+      margin: 4px 16px 12px;
+      background: #F4A300;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .flex-lotto-card .lotto-footnote {
+      padding: 4px 16px 14px;
+      text-align: center;
+      font-size: 0.65rem;
+      color: #ccc;
+    }
+
+    /* ===== FLEX CARD (HOLIDAY) ===== */
+    .flex-holiday-card {
+      width: 280px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      background: #fff;
+    }
+    .flex-holiday-card .hol-hero {
+      padding: 20px 16px;
+      text-align: center;
+      background: linear-gradient(135deg, #fff5f5, #fff);
+    }
+    .flex-holiday-card .hol-hero .hol-icon { font-size: 3rem; margin-bottom: 4px; }
+    .flex-holiday-card .hol-hero .hol-title { font-size: 1.1rem; font-weight: 700; color: #222; }
+    .flex-holiday-card .hol-body { padding: 14px 16px; }
+    .flex-holiday-card .hol-row {
+      display: flex;
+      padding: 6px 0;
+      font-size: 0.82rem;
+      border-bottom: 1px solid #f3f3f3;
+    }
+    .flex-holiday-card .hol-row:last-child { border-bottom: none; }
+    .flex-holiday-card .hol-row .hol-label { color: #aaa; width: 55px; flex-shrink: 0; }
+    .flex-holiday-card .hol-row .hol-value { color: #333; }
+    .flex-holiday-card .hol-footer {
+      padding: 8px 16px 16px;
+      font-size: 0.72rem;
+      color: #aaa;
+      line-height: 1.5;
+    }
+
+    /* ===== FLEX CARD (FOOTBALL) ===== */
+    .football-carousel {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 4px 0;
+      scroll-snap-type: x mandatory;
+    }
+    .football-carousel::-webkit-scrollbar { height: 4px; }
+    .football-carousel::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 2px; }
+
+    .flex-fb-card {
+      min-width: 220px;
+      max-width: 220px;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      background: #fff;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+    }
+    .flex-fb-card .fb-header {
+      background: linear-gradient(135deg, #3d195b, #5a2d82);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .flex-fb-card .fb-header .pl-logo { font-size: 1.2rem; }
+    .flex-fb-card .fb-header .fb-title { color: #fff; font-size: 0.82rem; font-weight: 700; }
+    .flex-fb-card .fb-body { padding: 10px 14px; }
+
+    .fb-match-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #f3f3f3;
+      font-size: 0.75rem;
+    }
+    .fb-match-row:last-child { border-bottom: none; }
+    .fb-match-row .team-name { font-weight: 600; color: #222; max-width: 65px; }
+    .fb-match-row .score-badge {
+      background: #3d195b;
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.72rem;
+    }
+
+    .fb-standing-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 0;
+      border-bottom: 1px solid #f3f3f3;
+      font-size: 0.75rem;
+    }
+    .fb-standing-row:last-child { border-bottom: none; }
+    .fb-standing-row .rank { color: #999; font-weight: 600; width: 16px; text-align: right; }
+    .fb-standing-row .st-team { flex: 1; font-weight: 500; color: #222; }
+    .fb-standing-row .pts { font-weight: 700; color: #3d195b; }
+
+    .fb-scorer-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 0;
+      border-bottom: 1px solid #f3f3f3;
+      font-size: 0.73rem;
+    }
+    .fb-scorer-row:last-child { border-bottom: none; }
+    .fb-scorer-row .rank { color: #999; font-weight: 600; width: 16px; text-align: right; }
+    .fb-scorer-row .scorer-name { flex: 1; color: #222; }
+    .fb-scorer-row .goals { font-weight: 700; color: #059669; }
+    .fb-scorer-row .assists { color: #999; font-size: 0.68rem; }
+
+    /* ===== DIVIDER ===== */
+    .divider { border: none; height: 1px; background: var(--border); margin: 40px 0; }
+
+    /* ===== CLOSING ===== */
+    .closing {
+      text-align: center;
+      padding: 48px 24px 64px;
+      border-top: 1px solid var(--border);
+      margin-top: 48px;
+    }
+    .closing h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; }
+    .closing p { color: var(--text-secondary); font-size: 0.95rem; max-width: 500px; margin: 0 auto; }
+    .closing .stack-icons { margin-top: 24px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
+    .closing .stack-icon {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    /* ===== NUMBER BADGE ===== */
+    .feature-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px; height: 24px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .hero { padding: 60px 20px 44px; }
+      .project-card { padding: 24px 20px; }
+      .flex-color-card, .flex-lotto-card, .flex-holiday-card { width: 260px; }
+      .flex-fb-card { min-width: 200px; max-width: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Portfolio — Side Project</div>
+      <div class="hero-bot-name">🔔</div>
+      <h1>น้องกริ่ง — LINE Bot</h1>
+      <div class="hero-sub">LINE Messaging Automation ด้วย Design Thinking</div>
+      <p>สร้างระบบแจ้งเตือนอัตโนมัติผ่าน LINE Messaging API ตั้งแต่ Empathize ไปจนถึง Deliver — ใช้จริงทุกวัน</p>
+    </div>
+  </header>
+
+  <article>
+    <div class="container">
+
+      <!-- ===== INTRO ===== -->
+      <div class="section-intro">
+        <h2>Background</h2>
+        <p>
+          <strong>"น้องกริ่ง"</strong> คือ LINE Bot ที่เกิดจากการสังเกต pain point ในชีวิตประจำวันของคนใกล้ตัว
+          แล้วนำ Design Thinking มาคิด วิเคราะห์ และสร้าง solution ที่ใช้ได้จริง
+          โดยใช้ LINE เป็น delivery channel เพราะคนไทยเปิดใช้งานทุกวัน
+        </p>
+      </div>
+
+      <div class="arch-box">
+        <h4>Tech Stack Overview</h4>
+        <div class="arch-flow">
+          <span class="node">Google Apps Script</span>
+          <span class="arrow">→</span>
+          <span class="node">LINE Messaging API</span>
+          <span class="arrow">→</span>
+          <span class="node">Flex Message (Card UI)</span>
+          <span class="arrow">→</span>
+          <span class="node">LINE App (ผู้รับ)</span>
+        </div>
+      </div>
+
+      <!-- ===== BOT FEATURES OVERVIEW ===== -->
+      <div class="section-intro">
+        <h2>น้องกริ่ง ทำอะไรได้บ้าง?</h2>
+        <p>4 ฟีเจอร์หลักที่ "น้องกริ่ง" ส่งให้ทุกวันอัตโนมัติ</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin: 20px 0;">
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; text-align: center; box-shadow: var(--shadow);">
+          <div style="font-size: 1.8rem; margin-bottom: 6px;">🎨</div>
+          <div style="font-weight: 600; font-size: 0.88rem;">สีมงคลประจำวัน</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">ทุกเช้า 06:30</div>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; text-align: center; box-shadow: var(--shadow);">
+          <div style="font-size: 1.8rem; margin-bottom: 6px;">📅</div>
+          <div style="font-weight: 600; font-size: 0.88rem;">วันหยุดประจำเดือน</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">ต้นเดือน</div>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; text-align: center; box-shadow: var(--shadow);">
+          <div style="font-size: 1.8rem; margin-bottom: 6px;">🎰</div>
+          <div style="font-weight: 600; font-size: 0.88rem;">ผลสลากกินแบ่ง</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">วันออกรางวัล 16:45</div>
+        </div>
+        <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; text-align: center; box-shadow: var(--shadow);">
+          <div style="font-size: 1.8rem; margin-bottom: 6px;">⚽</div>
+          <div style="font-weight: 600; font-size: 0.88rem;">ผลบอล Premier League</div>
+          <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">หลังจบเกม</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ============================================================ -->
+      <!-- FEATURE 1: สีมงคลประจำวัน -->
+      <!-- ============================================================ -->
+      <div class="project-card">
+        <h3><span class="feature-num">1</span> สีมงคลประจำวัน — Daily Lucky Color</h3>
+        <p class="subtitle">น้องกริ่งส่ง Flex Card สีมงคลทุกเช้า 06:30 อัตโนมัติ พร้อมวันพระ/จันทรคติ</p>
+
+        <div class="tags">
+          <span class="tag green">LINE Push API</span>
+          <span class="tag green">Flex Message</span>
+          <span class="tag">GAS Time Trigger</span>
+          <span class="tag">Google Calendar API</span>
+          <span class="tag">Thai Lunar Calendar</span>
+        </div>
+
+        <div class="dt-steps">
+          <div class="dt-step">
+            <div class="step-label">Empathize</div>
+            <div class="step-content">สังเกตว่าคนในครอบครัวชอบดูสีมงคลทุกเช้าจากเว็บดูดวง แต่ต้องเปิดหลายแอป เสียเวลาหาข้อมูลเอง บางวันลืมดู</div>
+          </div>
+          <div class="dt-step">
+            <div class="step-label">Define</div>
+            <div class="step-content">"ผู้ใช้ต้องการรู้สีมงคลประจำวันแบบไม่ต้องค้นหาเอง — ส่งมาเลยทุกเช้าใน LINE"</div>
+          </div>
+          <div class="dt-step">
+            <div class="step-label">Ideate</div>
+            <div class="step-content">ออกแบบ Flex Card ที่อ่านง่ายในจอมือถือ แสดงสี 5 ด้าน (การงาน, การเงิน, ความรัก, ผู้ใหญ่เมตตา, กาลกิณี) + ข้อมูลวันพระจาก Google Calendar</div>
+          </div>
+          <div class="dt-step">
+            <div class="step-label">Prototype & Test</div>
+            <div class="step-content">ทำ Flex Message ส่งทดสอบจริงใน LINE → ปรับ layout ให้อ่านง่าย → ใส่ภาพ hero ธีมโหราศาสตร์ → ใช้งานจริงทุกวันมากกว่า 6 เดือน</div>
+          </div>
+        </div>
+
+        <ul class="features">
+          <li>ส่ง push message ทุกเช้า 06:30 อัตโนมัติ (GAS Time-based Trigger)</li>
+          <li>ตารางสีมงคลครบ 7 วัน × 5 ด้าน (static data, ไม่ต้องเรียก API ภายนอก)</li>
+          <li>ดึงข้อมูลวันพระ/จันทรคติจาก Google Calendar (optional)</li>
+          <li>Flex Card UI ธีม galaxy พร้อมรูปจักรราศี อ่านง่ายบนมือถือ</li>
+        </ul>
+
+        <!-- LINE Chat Preview — สีมงคล -->
+        <div class="line-chat-preview">
+          <div class="chat-label">LINE Chat — ตัวอย่างจริงที่ส่งทุกเช้า</div>
+          <div class="line-msg-row">
+            <div class="line-avatar">🔔</div>
+            <div>
+              <div class="line-bot-label">น้องกริ่ง</div>
+              <div class="flex-color-card">
+                <div class="card-hero">
+                  <div class="day">วันจันทร์ ที่ 02</div>
+                  <div class="lunar">เป็นวันพระ</div>
+                </div>
+                <div class="card-body">
+                  <div class="color-row"><span class="label">การงาน</span><span class="value">สีส้ม / สีน้ำตาล</span></div>
+                  <div class="color-row"><span class="label">การเงิน</span><span class="value">สีม่วง / สีดำ</span></div>
+                  <div class="color-row"><span class="label">ความรัก</span><span class="value">สีเขียว</span></div>
+                  <div class="color-row"><span class="label">ผู้ใหญ่เมต...</span><span class="value">สีฟ้า / สีน้ำเงิน</span></div>
+                  <div class="color-row"><span class="label">กาลกิณี</span><span class="value">สีแดง</span></div>
+                </div>
+                <div class="card-footer">ขอให้วันนี้เป็นวันที่ดี ใส่สีมงคลแล้วปังทั้งวันนะ ✨</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <span class="code-label">Google Apps Script</span>
+<pre><span class="comment">// ตารางสีมงคลประจำวัน (static data)</span>
+<span class="keyword">const</span> <span class="const-name">COLOR_MAP_BY_DAY</span> = {
+  <span class="string">"วันจันทร์"</span>: {
+    work:   <span class="string">"สีส้ม / สีน้ำตาล"</span>,
+    money:  <span class="string">"สีม่วง / สีดำ"</span>,
+    love:   <span class="string">"สีเขียว"</span>,
+    senior: <span class="string">"สีฟ้า / สีน้ำเงิน"</span>,
+    bad:    <span class="string">"สีแดง"</span>
+  },
+  <span class="comment">// ... อีก 6 วัน</span>
+};
+
+<span class="comment">// ฟังก์ชันหลัก — น้องกริ่ง Trigger ทุกเช้า 06:30</span>
+<span class="keyword">function</span> <span class="func">sendDailyColorCard</span>() {
+  <span class="keyword">const</span> token = getProp_(<span class="string">"LINE_ACCESS_TOKEN"</span>);  <span class="comment">// <span class="censored">CENSORED</span></span>
+  <span class="keyword">const</span> to    = getProp_(<span class="string">"LINE_TO"</span>);             <span class="comment">// <span class="censored">CENSORED</span></span>
+
+  <span class="keyword">const</span> dayTH  = <span class="func">getThaiWeekday_</span>(<span class="keyword">new</span> Date());
+  <span class="keyword">const</span> colors = COLOR_MAP_BY_DAY[dayTH];
+  <span class="keyword">const</span> lunar  = <span class="func">getLunarFromCalendar_</span>(<span class="keyword">new</span> Date());
+
+  <span class="keyword">const</span> bubble = <span class="func">buildFlexBubble_</span>({ dateText, colors, lunar });
+  <span class="func">pushFlex_</span>(token, to, bubble);
+}</pre>
+        </div>
+
+        <div class="arch-box">
+          <h4>Architecture Flow</h4>
+          <div class="arch-flow">
+            <span class="node">GAS Trigger (06:30)</span>
+            <span class="arrow">→</span>
+            <span class="node">Build Flex Card</span>
+            <span class="arrow">→</span>
+            <span class="node">Google Calendar (วันพระ)</span>
+            <span class="arrow">→</span>
+            <span class="node">LINE Push API</span>
+            <span class="arrow">→</span>
+            <span class="node">ผู้รับ</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ============================================================ -->
+      <!-- FEATURE 2: วันหยุดประจำเดือน -->
+      <!-- ============================================================ -->
+      <div class="project-card">
+        <h3><span class="feature-num">2</span> วันหยุดประจำเดือน — Holiday Calendar</h3>
+        <p class="subtitle">น้องกริ่งส่งสรุปวันหยุดของเดือนนั้นๆ ให้วางแผนลาพักร้อนได้ล่วงหน้า</p>
+
+        <div class="tags">
+          <span class="tag green">LINE Push API</span>
+          <span class="tag green">Flex Message</span>
+          <span class="tag">Holiday Data</span>
+          <span class="tag">Personal Events</span>
+        </div>
+
+        <div class="dt-steps">
+          <div class="dt-step">
+            <div class="step-label">Empathize</div>
+            <div class="step-content">ทุกต้นเดือนต้องเปิดปฏิทินดูว่ามีวันหยุดวันไหนบ้าง เพื่อวางแผนลางาน ลาพักร้อน หรือนัดหมาย — บางเดือนมีวันหยุดเยอะแต่ไม่รู้ตัว</div>
+          </div>
+          <div class="dt-step">
+            <div class="step-label">Define</div>
+            <div class="step-content">"ผู้ใช้ต้องการเห็นภาพรวมวันหยุดของเดือนในที่เดียว เพื่อวางแผนได้ทันท่วงที"</div>
+          </div>
+          <div class="dt-step">
+            <div class="step-label">Ideate</div>
+            <div class="step-content">ออกแบบ Flex Card สรุปวันหยุดของเดือน แยกประเภท (holiday / personal) พร้อมข้อความแนะนำให้เช็คปฏิทินเพื่อหาวันลาต่อเนื่อง</div>
+          </div>
+        </div>
+
+        <!-- LINE Chat Preview — Holiday -->
+        <div class="line-chat-preview">
+          <div class="chat-label">LINE Chat — สรุปวันหยุดประจำเดือน</div>
+          <div class="line-msg-row">
+            <div class="line-avatar">🔔</div>
+            <div>
+              <div class="line-bot-label">น้องกริ่ง</div>
+              <div class="flex-holiday-card">
+                <div class="hol-hero">
+                  <div class="hol-icon">📆</div>
+                  <div class="hol-title">วันหยุด : Feb 2026</div>
+                </div>
+                <div class="hol-body">
+                  <div class="hol-row"><span class="hol-label">Date</span><span class="hol-value">14 Feb 2026</span></div>
+                  <div class="hol-row"><span class="hol-label">Event</span><span class="hol-value">วันวาเลนไทน์ (holiday)</span></div>
+                  <div class="hol-row"><span class="hol-label">Date</span><span class="hol-value">17 Feb 2026</span></div>
+                  <div class="hol-row"><span class="hol-label">Event</span><span class="hol-value">วันตรุษจีน (holiday)</span></div>
+                  <div class="hol-row"><span class="hol-label">Date</span><span class="hol-value">19 Feb 2026</span></div>
+                  <div class="hol-row"><span class="hol-label">Event</span><span class="hol-value">วันเกิดป้าจัน (personal)</span></div>
+                </div>
+                <div class="hol-footer">Let me check the calendar to see if it lines up with any holidays so I can take a longer break.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ul class="features">
+          <li>ส่งสรุปวันหยุดทุกต้นเดือนอัตโนมัติ</li>
+          <li>แยกประเภท: holiday (วันหยุดราชการ) vs personal (วันสำคัญส่วนตัว)</li>
+          <li>ข้อความท้ายการ์ดกระตุ้นให้วางแผนลาต่อเนื่อง</li>
+          <li>ข้อมูลวันหยุดตั้งเป็น config แก้ไขง่ายทุกปี</li>
+        </ul>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ============================================================ -->
+      <!-- FEATURE 3: ผลสลากกินแบ่ง -->
+      <!-- ============================================================ -->
+      <div class="project-card">
+        <h3><span class="feature-num">3</span> ผลสลากกินแบ่งรัฐบาล</h3>
+        <p class="subtitle">น้องกริ่งส่งผลหวยอัตโนมัติเข้า LINE Group ทุกวันออกรางวัล พร้อม Flex Card สวยงาม</p>
+
+        <div class="tags">
+          <span class="tag green">LINE Push API</span>
+          <span class="tag green">Flex Message</span>
+          <span class="tag">GAS Time Trigger</span>
+          <span class="tag blue">3rd Party API</span>
+          <span class="tag">Auto Schedule</span>
+          <span class="tag purple">SHA-256 Dedup</span>
+        </div>
+
+        <div class="dt-steps">
+          <div class="dt-step">
+            <div class="step-label">Empathize</div>
+            <div class="step-content">คนในกลุ่ม LINE ถามกันทุกงวดว่า "หวยออกอะไร" ต้องไปเปิดเว็บเช็คเอง บางคนไม่สะดวก ผู้สูงอายุเปิดเว็บยาก</div>
+          </div>
+          <div class="dt-step">
+            <div class="step-label">Define</div>
+            <div class="step-content">"ผู้ใช้ต้องการรู้ผลสลากทันทีในที่ที่เขาใช้อยู่แล้ว (LINE Group) โดยไม่ต้องเปิดเว็บ"</div>
+          </div>
+          <div class="dt-step">
+            <div class="step-label">Ideate</div>
+            <div class="step-content">ออกแบบ Flex Card ที่โชว์ผลรางวัลหลักได้ชัดเจน (รางวัลที่ 1 ตัวใหญ่สุด) พร้อม CTA ไปเช็คเพิ่มเติม + ระบบ schedule ส่งเฉพาะวันออกรางวัลเท่านั้น</div>
+          </div>
+          <div class="dt-step">
+            <div class="step-label">Prototype & Test</div>
+            <div class="step-content">ส่ง mock data ทดสอบ → ปรับ UI ให้อ่านง่าย (Prize 1 เว้นวรรค, สีโทนน้ำเงินเข้ม) → รันจริง ส่งอัตโนมัติทุกงวด</div>
+          </div>
+        </div>
+
+        <div class="insight-box">
+          <h4>Creative Highlights</h4>
+          <p>
+            <strong>Auto-Year Config:</strong> สร้างระบบ config วันออกรางวัลแบบ JSON per year — รองรับวันหยุดที่เลื่อนงวด (เช่น 1 ม.ค. → 2 ม.ค.) และงวดพิเศษ (เช่น 30 ธ.ค.) โดยไม่ต้องแก้โค้ดทุกปี
+            <br><br>
+            <strong>Deduplication:</strong> ใช้ SHA-256 hash ป้องกันส่งซ้ำ แม้ trigger รันหลายรอบในวันเดียวกัน
+          </p>
+        </div>
+
+        <ul class="features">
+          <li>ดึงผลสลากจาก API อัตโนมัติ พร้อม retry 3 ครั้งหาก API ล่ม</li>
+          <li>ส่งเฉพาะวันออกรางวัลตาม config (รองรับ override/shift/extra)</li>
+          <li>ระบบ deduplicate ป้องกันส่งซ้ำด้วย SHA-256 hash</li>
+          <li>Flex Card โทนน้ำเงินเข้ม เลขรางวัลที่ 1 ตัวใหญ่เว้นวรรค อ่านง่าย</li>
+          <li>ปุ่ม CTA "ไปเช็คเลขเพิ่มเติม" ลิงก์ไปเว็บตรวจผล</li>
+        </ul>
+
+        <!-- LINE Chat Preview — Lotto -->
+        <div class="line-chat-preview">
+          <div class="chat-label">LINE Chat — ผลสลากกินแบ่งรัฐบาล</div>
+          <div class="line-msg-row">
+            <div class="line-avatar">🔔</div>
+            <div>
+              <div class="line-bot-label">น้องกริ่ง</div>
+              <div class="flex-lotto-card">
+                <div class="lotto-header">
+                  <div class="title">ผลสลากกินแบ่งรัฐบาล</div>
+                  <div class="date">งวด 1 กุมภาพันธ์ 2569</div>
+                  <div class="prize-label">รางวัลที่ 1</div>
+                </div>
+                <div class="prize1-box">
+                  <div class="number">174629</div>
+                </div>
+                <div class="lotto-bottom">
+                  <div class="mini-prize">
+                    <div class="mini-label">เลขหน้า 3 ตัว</div>
+                    <div class="mini-num">917</div>
+                    <div class="mini-num">195</div>
+                  </div>
+                  <div class="mini-prize">
+                    <div class="mini-label">เลขท้าย 3 ตัว</div>
+                    <div class="mini-num">408</div>
+                    <div class="mini-num">041</div>
+                  </div>
+                  <div class="mini-prize">
+                    <div class="mini-label">เลขท้าย 2 ตัว</div>
+                    <div class="mini-num big">48</div>
+                  </div>
+                </div>
+                <div class="lotto-cta">🔍 ไปเช็คเลขเพิ่มเติม</div>
+                <div class="lotto-footnote">แจ้งเตือนเพื่อความสะดวก กรุณาตรวจสอบซ้ำกับแหล่งทางการ</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <span class="code-label">Google Apps Script</span>
+<pre><span class="comment">// Auto-Year Draw Config — รองรับเลื่อนงวด + งวดพิเศษ</span>
+<span class="keyword">const</span> <span class="const-name">cfg2026</span> = {
+  overrides: {
+    <span class="string">"2026-01-01"</span>: <span class="string">"2026-01-02"</span>,  <span class="comment">// ปีใหม่ → เลื่อน</span>
+    <span class="string">"2026-05-01"</span>: <span class="string">"2026-05-02"</span>,  <span class="comment">// วันแรงงาน → เลื่อน</span>
+  },
+  extra: [<span class="string">"2026-12-30"</span>],  <span class="comment">// งวดพิเศษสิ้นปี</span>
+  remove: []
+};
+
+<span class="comment">// Deduplicate ด้วย SHA-256</span>
+<span class="keyword">function</span> <span class="func">isAlreadySent_</span>(data) {
+  <span class="keyword">const</span> lastKey  = <span class="func">getProp_</span>(<span class="string">"LOTTO_LAST_SENT_DATEKEY"</span>);
+  <span class="keyword">const</span> lastHash = <span class="func">getProp_</span>(<span class="string">"LOTTO_LAST_SENT_HASH"</span>);
+  <span class="keyword">return</span> lastKey === data.drawDateKey
+      && lastHash === data.payloadHash;
+}
+
+<span class="comment">// น้องกริ่งส่ง Flex ไป LINE Group</span>
+<span class="keyword">function</span> <span class="func">runSendLatestLottoToGroup</span>() {
+  <span class="keyword">const</span> groupId = <span class="func">getProp_</span>(<span class="string">"LINE_GROUP_ID"</span>);  <span class="comment">// <span class="censored">CENSORED</span></span>
+  <span class="keyword">const</span> data = <span class="func">fetchLatestLotteryWithRetry_</span>();
+  <span class="keyword">if</span> (<span class="func">isAlreadySent_</span>(data)) <span class="keyword">return</span>;
+
+  <span class="keyword">const</span> flex = <span class="func">buildLottoFlex_</span>(data);
+  <span class="func">linePushToGroup_</span>([flex]);
+  <span class="func">markSent_</span>(data);
+}</pre>
+        </div>
+
+        <div class="arch-box">
+          <h4>Architecture Flow</h4>
+          <div class="arch-flow">
+            <span class="node">GAS Daily Trigger (16:45)</span>
+            <span class="arrow">→</span>
+            <span class="node">Check Draw Config</span>
+            <span class="arrow">→</span>
+            <span class="node">Fetch Lotto API</span>
+            <span class="arrow">→</span>
+            <span class="node">Dedupe Check</span>
+            <span class="arrow">→</span>
+            <span class="node">LINE Push → Group</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ============================================================ -->
+      <!-- FEATURE 4: ผลบอล Premier League -->
+      <!-- ============================================================ -->
+      <div class="project-card">
+        <h3><span class="feature-num">4</span> ผลบอล Premier League — Football Results</h3>
+        <p class="subtitle">น้องกริ่งส่ง 3 การ์ด: ผลบอลเมื่อคืน + ตารางคะแนน Top 10 + ดาวซัลโว Top 10</p>
+
+        <div class="tags">
+          <span class="tag green">LINE Push API</span>
+          <span class="tag green">Flex Carousel</span>
+          <span class="tag">Cloudinary CDN</span>
+          <span class="tag blue">SVG → PNG Transform</span>
+          <span class="tag">Sports Data</span>
+        </div>
+
+        <div class="dt-steps">
+          <div class="dt-step">
+            <div class="step-label">Empathize</div>
+            <div class="step-content">เพื่อนในกลุ่มเป็นแฟนบอล Premier League ถามกันบ่อยว่า "เมื่อคืนใครชนะ" "ตอนนี้ใครนำ" ต้องเปิดแอปกีฬาหลายตัว</div>
+          </div>
+          <div class="dt-step">
+            <div class="step-label">Define</div>
+            <div class="step-content">"ผู้ใช้ต้องการรู้ผลบอล + ตารางคะแนน + ดาวซัลโว ในที่เดียว — LINE Group ที่คุยกันอยู่แล้ว"</div>
+          </div>
+          <div class="dt-step">
+            <div class="step-label">Ideate</div>
+            <div class="step-content">ออกแบบ 3 Flex Cards เป็น Carousel: (1) ผลบอลเมื่อคืน พร้อมสกอร์ (2) ตารางคะแนน Top 10 (3) ดาวซัลโว Top 10 — โชว์โลโก้ทีมจาก Cloudinary CDN</div>
+          </div>
+          <div class="dt-step">
+            <div class="step-label">Prototype & Test</div>
+            <div class="step-content">พบปัญหา SVG โลโก้ไม่แสดงบน LINE Mobile → แก้ด้วย Cloudinary transform (f_png) → ปรับ 3 การ์ดให้สไลด์ได้ในมือถือ</div>
+          </div>
+        </div>
+
+        <div class="insight-box">
+          <h4>Problem Solving — SVG ไม่แสดงบน LINE Mobile</h4>
+          <p>
+            โลโก้ทีมบน Cloudinary เป็น SVG ซึ่ง LINE Flex Message บนมือถือแสดงผลไม่ได้<br><br>
+            <strong>Solution:</strong> เขียน <code>toPngCloudinary_()</code> ที่เติม <code>f_png</code> transformation parameter อัตโนมัติ — ไม่ต้อง re-upload ไฟล์ใหม่
+          </p>
+        </div>
+
+        <ul class="features">
+          <li>3 Flex Cards ใน Carousel เดียว — ปัดซ้ายขวาดูได้บนมือถือ</li>
+          <li>Card 1: ผลบอลเมื่อคืน — แสดงคู่แข่ง + สกอร์ + โลโก้ทีม</li>
+          <li>Card 2: ตารางคะแนน Top 10 — อันดับ + ทีม + คะแนน</li>
+          <li>Card 3: ดาวซัลโว Top 10 — นักเตะ + ประตู + แอสซิสต์</li>
+          <li>โลโก้ทีมจาก Cloudinary CDN + auto SVG→PNG transform</li>
+        </ul>
+
+        <!-- LINE Chat Preview — Football 3 cards -->
+        <div class="line-chat-preview">
+          <div class="chat-label">LINE Chat — ผลบอลเมื่อคืน Carousel 3 การ์ด (เลื่อนได้ →)</div>
+          <div class="line-msg-row">
+            <div class="line-avatar">🔔</div>
+            <div style="overflow: hidden;">
+              <div class="line-bot-label">น้องกริ่ง</div>
+              <div class="football-carousel">
+
+                <!-- Card 1: ผลบอลเมื่อคืน -->
+                <div class="flex-fb-card">
+                  <div class="fb-header">
+                    <div class="pl-logo">🦁</div>
+                    <div>
+                      <div class="fb-title">ผลบอลเมื่อคืน</div>
+                      <div style="color: #ccc; font-size: 0.65rem;">Matchweek 24 · 2026-02-01</div>
+                    </div>
+                  </div>
+                  <div class="fb-body">
+                    <div style="font-size: 0.7rem; color: #999; font-weight: 600; padding: 4px 0;">Sun 1 Feb</div>
+                    <div class="fb-match-row">
+                      <span class="team-name">Tottenham</span>
+                      <span class="score-badge">2-2</span>
+                      <span class="team-name" style="text-align: right;">Man City</span>
+                    </div>
+                    <div class="fb-match-row">
+                      <span class="team-name">Aston Villa</span>
+                      <span class="score-badge">1-1</span>
+                      <span class="team-name" style="text-align: right;">Brentford</span>
+                    </div>
+                    <div class="fb-match-row">
+                      <span class="team-name">Man United</span>
+                      <span class="score-badge">3-2</span>
+                      <span class="team-name" style="text-align: right;">Fulham</span>
+                    </div>
+                    <div class="fb-match-row">
+                      <span class="team-name">Nottingham</span>
+                      <span class="score-badge">1-1</span>
+                      <span class="team-name" style="text-align: right;">C. Palace</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 2: ตารางคะแนน -->
+                <div class="flex-fb-card">
+                  <div class="fb-header">
+                    <div class="pl-logo">🦁</div>
+                    <div class="fb-title">ตารางคะแนน | Top 10</div>
+                  </div>
+                  <div class="fb-body">
+                    <div class="fb-standing-row"><span class="rank">1</span><span class="st-team">Arsenal</span><span class="pts">53 pts</span></div>
+                    <div class="fb-standing-row"><span class="rank">2</span><span class="st-team">Man City</span><span class="pts">47 pts</span></div>
+                    <div class="fb-standing-row"><span class="rank">3</span><span class="st-team">Aston Villa</span><span class="pts">46 pts</span></div>
+                    <div class="fb-standing-row"><span class="rank">4</span><span class="st-team">Man United</span><span class="pts">41 pts</span></div>
+                    <div class="fb-standing-row"><span class="rank">5</span><span class="st-team">Chelsea</span><span class="pts">40 pts</span></div>
+                    <div class="fb-standing-row"><span class="rank">6</span><span class="st-team">Liverpool</span><span class="pts">39 pts</span></div>
+                    <div class="fb-standing-row"><span class="rank">7</span><span class="st-team">Brentford</span><span class="pts">36 pts</span></div>
+                    <div class="fb-standing-row"><span class="rank">8</span><span class="st-team">Fulham</span><span class="pts">34 pts</span></div>
+                    <div class="fb-standing-row"><span class="rank">9</span><span class="st-team">Everton</span><span class="pts">34 pts</span></div>
+                    <div class="fb-standing-row"><span class="rank">10</span><span class="st-team">Newcastle</span><span class="pts">33 pts</span></div>
+                  </div>
+                </div>
+
+                <!-- Card 3: ดาวซัลโว -->
+                <div class="flex-fb-card">
+                  <div class="fb-header">
+                    <div class="pl-logo">🦁</div>
+                    <div class="fb-title">ดาวซัลโว | Top 10</div>
+                  </div>
+                  <div class="fb-body">
+                    <div class="fb-scorer-row"><span class="rank">1.</span><span class="scorer-name">Erling Haaland</span><span class="goals">20G</span><span class="assists">5A</span></div>
+                    <div class="fb-scorer-row"><span class="rank">2.</span><span class="scorer-name">Thiago Rodrigues</span><span class="goals">16G</span><span class="assists">1A</span></div>
+                    <div class="fb-scorer-row"><span class="rank">3.</span><span class="scorer-name">Antoine Semenyo</span><span class="goals">12G</span><span class="assists">3A</span></div>
+                    <div class="fb-scorer-row"><span class="rank">4.</span><span class="scorer-name">Hugo Ekitike</span><span class="goals">10G</span><span class="assists">2A</span></div>
+                    <div class="fb-scorer-row"><span class="rank">5.</span><span class="scorer-name">João Pedro</span><span class="goals">9G</span><span class="assists">4A</span></div>
+                    <div class="fb-scorer-row"><span class="rank">6.</span><span class="scorer-name">D. Calvert-Lewin</span><span class="goals">9G</span><span class="assists">1A</span></div>
+                    <div class="fb-scorer-row"><span class="rank">7.</span><span class="scorer-name">Enzo Fernández</span><span class="goals">8G</span><span class="assists">2A</span></div>
+                    <div class="fb-scorer-row"><span class="rank">8.</span><span class="scorer-name">Bruno Guimarães</span><span class="goals">8G</span><span class="assists">3A</span></div>
+                    <div class="fb-scorer-row"><span class="rank">9.</span><span class="scorer-name">Bryan Mbeumo</span><span class="goals">8G</span><span class="assists">1A</span></div>
+                    <div class="fb-scorer-row"><span class="rank">...</span><span class="scorer-name">Jarrod Bowen</span><span class="goals">8G</span><span class="assists">2A</span></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <span class="code-label">Google Apps Script</span>
+<pre><span class="comment">// Cloudinary SVG → PNG (fix LINE Mobile)</span>
+<span class="keyword">function</span> <span class="func">toPngCloudinary_</span>(url) {
+  <span class="keyword">if</span> (!url) <span class="keyword">return</span> url;
+  <span class="keyword">const</span> isCloudinary = url.includes(<span class="string">"res.cloudinary.com"</span>);
+  <span class="keyword">const</span> looksSvg = url.toLowerCase().includes(<span class="string">".svg"</span>);
+
+  <span class="keyword">if</span> (isCloudinary && looksSvg) {
+    <span class="keyword">return</span> url.replace(
+      <span class="string">"/image/upload/"</span>,
+      <span class="string">"/image/upload/f_png/"</span>
+    );
+  }
+  <span class="keyword">return</span> url;
+}
+
+<span class="comment">// Carousel: 3 Flex Cards ใน message เดียว</span>
+<span class="comment">// Card 1: ผลบอล | Card 2: ตารางคะแนน | Card 3: ดาวซัลโว</span>
+<span class="keyword">function</span> <span class="func">buildFootballCarousel_</span>(matchData) {
+  <span class="keyword">return</span> {
+    type: <span class="string">"flex"</span>,
+    altText: <span class="string">"ผลบอล Premier League"</span>,
+    contents: {
+      type: <span class="string">"carousel"</span>,
+      contents: [
+        <span class="func">buildResultsBubble_</span>(matchData),
+        <span class="func">buildStandingsBubble_</span>(matchData),
+        <span class="func">buildTopScorersBubble_</span>(matchData),
+      ]
+    }
+  };
+}</pre>
+        </div>
+
+        <div class="arch-box">
+          <h4>Architecture Flow</h4>
+          <div class="arch-flow">
+            <span class="node">Sports Data API</span>
+            <span class="arrow">→</span>
+            <span class="node">GAS Script</span>
+            <span class="arrow">→</span>
+            <span class="node">Cloudinary (Logo CDN)</span>
+            <span class="arrow">→</span>
+            <span class="node">Flex Carousel × 3</span>
+            <span class="arrow">→</span>
+            <span class="node">LINE Group</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ===== LEARNINGS ===== -->
+      <div class="section-intro">
+        <h2>สิ่งที่ได้เรียนรู้</h2>
+      </div>
+
+      <div class="project-card" style="border-left: 3px solid var(--accent);">
+        <ul class="features">
+          <li><strong>Design Thinking ใช้ได้จริงกับ side project</strong> — แค่สังเกต pain point ของคนใกล้ตัวก็ได้ "น้องกริ่ง" ที่ใช้งานจริงทุกวัน</li>
+          <li><strong>LINE เป็น delivery channel ที่ดีสำหรับคนไทย</strong> — ไม่ต้องลงแอปใหม่ เปิดอ่านได้ทุกวัน</li>
+          <li><strong>Flex Message มีข้อจำกัด</strong> — SVG ไม่แสดงบนมือถือ, ขนาด bubble มีจำกัด, ต้อง optimize UI ให้เหมาะกับจอเล็ก</li>
+          <li><strong>Resilience สำคัญ</strong> — retry mechanism, deduplication, error handling ช่วยให้ระบบทำงานได้เสถียร</li>
+          <li><strong>Config-driven design</strong> — แยก data (สีมงคล, วันหวย, วันหยุด) ออกจาก logic ทำให้แก้ไขง่ายทุกปี</li>
+          <li><strong>Google Apps Script เหมาะกับ automation ขนาดเล็ก</strong> — ฟรี, มี trigger, เชื่อมต่อ Google Calendar ได้ง่าย</li>
+        </ul>
+      </div>
+
+      <!-- ===== CLOSING ===== -->
+      <div class="closing">
+        <h2>Tech Stack ที่ "น้องกริ่ง" ใช้</h2>
+        <p>ทุกฟีเจอร์ใช้ Google Apps Script เป็น backend + LINE Messaging API เป็น delivery channel</p>
+        <div class="stack-icons">
+          <span class="stack-icon">Google Apps Script</span>
+          <span class="stack-icon">LINE Messaging API</span>
+          <span class="stack-icon">LINE Flex Message</span>
+          <span class="stack-icon">Google Calendar API</span>
+          <span class="stack-icon">Cloudinary CDN</span>
+          <span class="stack-icon">REST API</span>
+          <span class="stack-icon">SHA-256 Hashing</span>
+          <span class="stack-icon">JSON Config</span>
+        </div>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- Footer -->
+  <div style="text-align:center;margin-bottom:0;line-height:0;height:200px;overflow:hidden;">
+    <img src="https://natpakans-stack.github.io/talk-to-figma-mcp/assets/aw-mascot.avif" alt="Aw mascot" style="width:320px;height:auto;">
+  </div>
+  <footer style="text-align:center;padding:24px 20px 40px;color:var(--text-secondary,#555770);font-size:14px;border-top:1px solid var(--border,#e4e4eb);">
+    <p style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin:0;">
+      <a href="https://natpakans-stack.github.io/line-messaging-portfolio" style="color:#a259ff;text-decoration:none;">line-messaging-portfolio</a>
+      <a href="https://natpakans-stack.github.io/parking-reminder-portfolio" style="color:#a259ff;text-decoration:none;">parking-reminder-portfolio</a>
+      <a href="https://natpakans-stack.github.io/carpark_live_dashboard" style="color:#a259ff;text-decoration:none;">carpark_live_dashboard</a>
+    </p>
+  </footer>
+
+</body>
+</html>

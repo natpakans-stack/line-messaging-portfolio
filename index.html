@@ -500,10 +500,21 @@
     /* ===== CLOSING ===== */
     .closing {
       text-align: center;
-      padding: 48px 24px 64px;
+      padding: 40px 24px 64px;
       border-top: 1px solid var(--border);
-      margin-top: 48px;
+      margin-top: 140px;
+      position: relative;
     }
+    .mascot-half {
+      width: 180px;
+      height: 120px;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -100%);
+    }
+    .mascot-half img { width: 100%; height: auto; display: block; }
     .closing h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; }
     .closing p { color: var(--text-secondary); font-size: 0.95rem; max-width: 500px; margin: 0 auto; }
     .closing .stack-icons { margin-top: 24px; display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; }
@@ -1137,6 +1148,9 @@
 
       <!-- ===== CLOSING ===== -->
       <div class="closing">
+        <div class="mascot-half">
+            <img src="https://natpakans-stack.github.io/talk-to-figma-mcp/assets/aw-mascot.avif" alt="Aw mascot">
+        </div>
         <h2>Tech Stack ที่ "น้องกริ่ง" ใช้</h2>
         <p>ทุกฟีเจอร์ใช้ Google Apps Script เป็น backend + LINE Messaging API เป็น delivery channel</p>
         <div class="stack-icons">

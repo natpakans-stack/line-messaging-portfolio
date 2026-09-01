@@ -611,7 +611,207 @@
       .back-nav { top: 10px; left: 10px; padding: 6px 12px; font-size: 0.78rem; }
       .back-to-top { bottom: 16px; right: 16px; width: 40px; height: 40px; }
     }
-  </style>
+  
+    /* component-refresh v1 */
+
+    /* ============================================================
+       Component refresh — layout/token/ฟอนต์เดิมทั้งหมด
+       แก้เฉพาะ component ที่เป็น "การ์ดขาว + แถบสี + อีโมจิ" เรียงซ้ำ
+       เปลี่ยนเป็นรายการคั่นเส้นบาง + ไอคอน lucide
+       ============================================================ */
+
+    .ico { width: 17px; height: 17px; flex: none; stroke-width: 1.6; }
+
+    /* --- ปัญหา / วิธีแก้ : เลิกเป็นการ์ด --- */
+    .pain-grid, .solution-grid {
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+    .pain-card, .solution-card {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      padding: 22px 0;
+      display: grid;
+      grid-template-columns: 20px minmax(0, 1fr);
+      gap: 0 14px;
+      align-items: start;
+    }
+    .pain-card .ico, .solution-card .ico { margin-top: 0.34em; }
+    .pain-card .ico { color: var(--red); }
+    .solution-card .ico { color: var(--accent); }
+    .pain-card h3, .solution-card h3 {
+      grid-column: 2; margin: 0;
+      font-size: 1rem; font-weight: 600; line-height: 1.55;
+    }
+    .pain-card p, .solution-card p { grid-column: 2; margin-top: 6px; line-height: 1.75; }
+
+    .pain-card:last-child, .solution-card:last-child,
+    .flow-step:last-child, .hack-card:last-child,
+    .plain li:last-child, .rung:last-child { border-bottom: 0; }
+
+    /* --- ขั้นตอน : เลิกเป็นการ์ดกลางจอ --- */
+    .flow-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+      border-top: 1px solid var(--border);
+    }
+    .flow-step {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      padding: 18px 0;
+      text-align: left;
+      display: grid;
+      grid-template-columns: 26px 20px minmax(0, 1fr);
+      gap: 0 12px;
+      align-items: start;
+    }
+    .flow-step .step-num {
+      width: auto; height: auto; margin: 0;
+      background: none; color: var(--accent);
+      border-radius: 0; display: block;
+      font-size: 0.88rem; font-weight: 600; line-height: 1.7;
+      font-variant-numeric: tabular-nums;
+    }
+    .flow-step .ico { color: var(--text-muted); margin-top: 0.3em; }
+    .flow-step h4 { grid-column: 3; margin: 0; font-size: 0.95rem; font-weight: 600; line-height: 1.6; }
+    .flow-step p { grid-column: 3; font-size: 0.86rem; margin-top: 5px; line-height: 1.72; }
+
+    /* --- Hack : เลิกเป็นการ์ด + ป้ายสี --- */
+    .hack-grid { gap: 0; border-top: 1px solid var(--border); }
+    .hack-card {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      padding: 26px 0;
+      overflow: visible;
+    }
+    .hack-card::before {
+      position: static;
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 0;
+      border-radius: 0;
+      background: none !important;
+      color: var(--text-muted) !important;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+    }
+    .hack-card h3 {
+      padding-right: 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.55;
+      display: grid;
+      grid-template-columns: 20px minmax(0, 1fr);
+      gap: 0 13px;
+      align-items: start;
+    }
+    .hack-card h3 .ico { color: var(--red); margin-top: 0.3em; }
+    .hack-card > p { margin-top: 8px; line-height: 1.75; }
+    .hack-card .highlight {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 0;
+      border-left: 2px solid var(--emerald);
+      background: var(--bg);
+      color: var(--text-secondary);
+      font-weight: 400;
+      line-height: 1.75;
+    }
+    .hack-card .highlight strong, .hack-card .highlight b { color: var(--text); font-weight: 600; }
+
+    /* --- ตัวเลขสรุป : เลิก gradient text --- */
+    .metric-card .num {
+      background: none;
+      -webkit-text-fill-color: currentColor;
+      color: var(--accent);
+    }
+
+    /* --- learning-card: ลดความเป็นการ์ด --- */
+    .learning-card {
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--border);
+      border-radius: 0;
+      padding: 20px 0;
+      margin-bottom: 0;
+    }
+    .learning-card:last-of-type { border-bottom: 0; }
+
+    /* กล่องหมายเหตุ มีแถบสีด้านซ้าย — ใช้ class แทน inline style จะได้คุม padding ครบด้าน */
+    .learning-card.note {
+      background: var(--bg);
+      border: 0;
+      border-left: 3px solid var(--accent);
+      border-radius: 0;
+      padding: 18px 22px 20px;
+      margin: 22px 0 0;
+    }
+    .learning-card.note.ok { border-left-color: var(--emerald); }
+    .learning-card.note strong { display: block; margin-bottom: 6px; color: var(--accent-dark); }
+    .learning-card.note.ok strong { color: var(--emerald-dark); }
+    .learning-card.note p { margin-top: 0; }
+
+    /* --- ตารางเทียบทางเลือก (ของใหม่ ใช้ token เดิม) --- */
+    .ledger-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 20px; }
+    .ledger { width: 100%; border-collapse: collapse; font-size: 0.9rem; min-width: 520px; }
+    .ledger--wide { min-width: 780px; }
+    .ledger .num { width: 1%; white-space: nowrap; }
+    .ledger th {
+      text-align: left; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);
+      padding: 0 22px 10px 0; border-bottom: 1px solid var(--border); vertical-align: bottom;
+    }
+    .ledger td {
+      padding: 14px 22px 14px 0; border-bottom: 1px solid var(--border);
+      vertical-align: top; color: var(--text-secondary); line-height: 1.7;
+    }
+    .ledger td:first-child { color: var(--text); font-weight: 600; }
+    .ledger th:first-child, .ledger td:first-child { width: 22%; min-width: 120px; }
+    .ledger th:last-child, .ledger td:last-child { padding-right: 0; }
+    .ledger tr[data-picked] td { background: var(--accent-light); }
+    .ledger tr[data-picked] td:first-child { padding-left: 12px; }
+    .ledger tr[data-picked] td:last-child { padding-right: 12px; }
+    .ledger tr[data-picked] td:first-child { color: var(--accent-dark); }
+    .ledger .pick { display: inline-flex; white-space: nowrap; align-items: center; gap: 5px; color: var(--accent); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-left: 6px; }
+    .ledger .pick .ico { width: 13px; height: 13px; }
+
+    /* --- ลำดับการตัดสิน --- */
+    .ladder { border-top: 1px solid var(--border); margin-top: 20px; }
+    .rung {
+      display: grid; grid-template-columns: 1fr;
+      gap: 4px; padding: 14px 0; border-bottom: 1px solid var(--border);
+      align-items: baseline;
+    }
+    .rung .cond { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: var(--text); }
+    .rung .cond .ico { color: var(--text-muted); width: 15px; height: 15px; }
+    .rung .out { font-family: var(--mono); font-size: 0.82rem; color: var(--accent-dark); }
+    .rung .note { font-size: 0.82rem; color: var(--text-muted); line-height: 1.65; }
+    .rung.none .out { color: var(--text-muted); }
+
+    /* --- รายการธรรมดา มีไอคอนนำ --- */
+    .plain { list-style: none; border-top: 1px solid var(--border); margin-top: 20px; }
+    .plain li {
+      display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 0 14px;
+      padding: 16px 0; border-bottom: 1px solid var(--border);
+      font-size: 0.92rem; color: var(--text-secondary); line-height: 1.75;
+    }
+    .plain li .ico { color: var(--text-muted); margin-top: 0.32em; }
+    .plain li b { color: var(--text); font-weight: 600; }
+
+    @media (min-width: 700px) {
+      .rung { grid-template-columns: minmax(0, 1.1fr) 140px minmax(0, 1.2fr); gap: 0 20px; }
+    }
+
+    .hero-mark .ico { width: 34px; height: 34px; stroke-width: 1.5; color: var(--navy); }
+    .hero-badge .ico { width: 14px; height: 14px; }
+</style>
 </head>
 <body>
 
@@ -660,17 +860,17 @@
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin: 20px 0;">
         <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; text-align: center; box-shadow: var(--shadow);">
-          <div style="font-size: 1.8rem; margin-bottom: 6px;">🎨</div>
+          <div style="font-size: 1.8rem; margin-bottom: 6px;"><svg class="ico" style="width:1.48rem;height:1.48rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"/><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/></svg></div>
           <div style="font-weight: 600; font-size: 0.88rem;">สีมงคลประจำวัน</div>
           <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">ทุกเช้า 06:30</div>
         </div>
         <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; text-align: center; box-shadow: var(--shadow);">
-          <div style="font-size: 1.8rem; margin-bottom: 6px;">📅</div>
+          <div style="font-size: 1.8rem; margin-bottom: 6px;"><svg class="ico" style="width:1.48rem;height:1.48rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg></div>
           <div style="font-weight: 600; font-size: 0.88rem;">วันหยุดประจำเดือน</div>
           <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">ต้นเดือน</div>
         </div>
         <div style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; text-align: center; box-shadow: var(--shadow);">
-          <div style="font-size: 1.8rem; margin-bottom: 6px;">🎰</div>
+          <div style="font-size: 1.8rem; margin-bottom: 6px;"><svg class="ico" style="width:1.48rem;height:1.48rem" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="12" height="12" x="2" y="10" rx="2" ry="2"/><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6"/><path d="M6 18h.01"/><path d="M10 14h.01"/><path d="M15 6h.01"/><path d="M18 9h.01"/></svg></div>
           <div style="font-weight: 600; font-size: 0.88rem;">ผลสลากกินแบ่ง</div>
           <div style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">วันออกรางวัล 16:45</div>
         </div>
@@ -1245,5 +1445,26 @@
 })();
 </script>
 
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "ณัฐปคัลภ์ ศิริรัตน์ (Natpakan Sirirat) — Portfolio",
+      "item": "https://projects.tanplanet.info/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "LINE Messaging Portfolio",
+      "item": "https://projects.tanplanet.info/line-messaging-portfolio/"
+    }
+  ]
+}
+</script>
 </body>
 </html>
